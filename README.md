@@ -80,6 +80,13 @@ conclusion. Their code is kept here (`code/e11_e12_phan_tang.py` for the stratif
 `code/e13_mo_hinh_chu_so.py` for the closed-form digit model) so that the withdrawal can be
 checked rather than taken on trust.
 
+## Checking this repository for leaked record metadata
+
+Before each push the tree is scanned for strings shaped like a document subject line
+(`[a-z]+(-[a-z]+){4,}`). One known false positive is expected and is not data: the filename
+`4-title-page-with-author-details.pdf` inside `build-submit.sh`. Any other hit should be treated
+as a real leak until shown otherwise.
+
 ## Language
 
 Code comments and internal documentation are in Vietnamese; the figures, generated tables and the
