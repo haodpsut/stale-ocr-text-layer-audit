@@ -211,7 +211,9 @@ def main():
         mau, mk, net = KIEU[len(ax.lines) % len(KIEU)]
         ax.plot(f_, t_, lw=1.1, color=mau, ls=net, marker=mk, ms=3.2,
                 markevery=max(1, len(f_) // 7),
-                label="%s  AUC=%.2f" % (ten.split(" (")[0], v))
+                # ⛔ 2 chu so thap phan cho "AUC=1.00" trong khi than bai in 0.999: hai
+                # nguon noi khac nhau ve cung mot so. Dung dung so chu so voi macro.
+                label="%s  AUC=%.3f" % (ten.split(" (")[0], v))
     ax.plot([0, 1], [0, 1], color="black", alpha=0.35, ls=":", lw=0.8)
     ax.set_xlabel("false positive rate")
     ax.set_ylabel("true positive rate")

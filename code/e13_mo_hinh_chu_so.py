@@ -94,6 +94,7 @@ def main():
 
     print("== E13: mo hinh (1-p)^k cho dinh danh (n=%d) ==" % len(hang))
     cap = []           # (chuan, doc_ra) o dang chuoi
+    ten_cap = []       # ten tep tuong ung, de bootstrap theo TAI LIEU
     for i, r in enumerate(hang, 1):
         p = goc.get((r["nguon"], r["tep"]))
         if not p:
@@ -104,9 +105,17 @@ def main():
             continue
         if s:
             cap.append((r["so_hieu_ten_tep"], s))
+            ten_cap.append(r["tep"])
         if i % 80 == 0:
             print("  ... %d/%d" % (i, len(hang)), flush=True)
 
+    # ⭐ Ghi TUNG CAP ra dia. Khong co tep nay thi muon bootstrap theo TAI LIEU phai chay lai
+    # 400 lan OCR (15 phut). Nguoi doc ngoai hoi dung cho nay: 125 vi tri chu so den TU DAU.
+    import csv as _csv
+    with io.open(os.path.join(RES, "cap-chu-so.csv"), "w", encoding="utf-8", newline="") as _f:
+        _w = _csv.writer(_f); _w.writerow(["tep", "chuan", "ocr_doc_ra", "cung_do_dai"])
+        for _t, (_c, _d) in zip(ten_cap, cap):
+            _w.writerow([_t, _c, _d, int(len(_c) == len(_d))])
     print("\n  OCR tra ve mot so o %d/%d ca" % (len(cap), len(hang)))
     kiem(len(cap) >= 30, "du cap de uoc p", "%d cap" % len(cap))
     if len(cap) < 30:

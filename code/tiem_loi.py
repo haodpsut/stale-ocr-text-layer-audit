@@ -62,19 +62,25 @@ CA = [
     ("B13 hinh mo coi", os.path.join(S, "05-threats.tex"),
      doi("Table~\\ref{tab:bodo} and Figure~\\ref{fig:roc} appear", "Table~\\ref{tab:bodo} appears"),
      "B13 moi hinh"),
+    # ⛔ Ca nay tung KHONG bat duoc, va ly do la ca tiem CU chu khong phai cong hong:
+    # tab:sohieu nay duoc nhac HAI lan, nen bo mot cho van con mot. Phai bo HET.
     ("B13 bang mo coi", os.path.join(S, "04-results.tex"),
-     doi("A separate and larger draw of \\cBonN{} documents (Table~\\ref{tab:sohieu}),",
-         "A separate and larger draw of \\cBonN{} documents,"),
+     lambda t: t.replace("(Table~\\ref{tab:sohieu})", "").replace(
+         "Table~\\ref{tab:sohieu}", "that table"),
      "B13 moi bang"),
     ("B8 thuat ngu dan so", os.path.join(S, "01-intro.tex"),
      chen_sau("\\section{Introduction}", "\n\nWe study the scanned corpus here.\n"), "B8"),
     ("B12 ten tac gia da bo", os.path.join(S, "01-intro.tex"),
      chen_sau("\\section{Introduction}", "\n\nThanks to Nam Hoang for comments.\n"), "B12"),
+    # ⛔ Day phai du MANH de thoc ra NGOAI khoi chu cua lop tai lieu dang dung. Ban cu day
+    # 25mm, dung voi `article` le 2,5cm nhung KHONG dung voi `elsarticle` le 4,45cm.
     ("B16 muc tran ra le", os.path.join(S, "01-intro.tex"),
      chen_sau("\\section{Introduction}",
-              "\n\n\\noindent\\hspace*{-25mm}\\rule{30mm}{4pt}\n"), "B16"),
-    ("B14 vuot tran trang", os.path.join(S, "07-conclusion.tex"),
-     lambda t: t + "\n" + "\\clearpage\\mbox{}\n" * 4, "B14"),
+              "\n\n\\noindent\\hspace*{-40mm}\\rule{45mm}{4pt}\n"),
+     "B16 khong co muc thoc ra ngoai khoi chu"),
+    ("B14 vuot han muc trang", os.path.join(S, "07-conclusion.tex"),
+     lambda t: t + "\n" + "\\clearpage\\mbox{}\\vfill\\mbox{}\n" * 8,
+     "B14 so trang trong han muc"),
     ("B4 bang sinh ra ma khong dua vao", os.path.join(S, "04-results.tex"),
      doi("\\input{../results/tables/tab-banhanh}", "\\mbox{}"), "B4"),
     ("B15 macro moi chua khai", os.path.join("results", "so-lieu-e15.tex"),
@@ -91,6 +97,24 @@ CA = [
     ("B18 hinh khong nap txstyle", os.path.join("figures", "src", "f13-ba-nhanh.tex"),
      doi("\\input{txstyle.tex}", "\\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}"),
      "B18 moi hinh TikZ deu nap txstyle.tex"),
+    ("B14 tom tat qua 250 tu", "paper/main.tex",
+     doi("We propose no fix;",
+         "We note that the rule examined here is applied by essentially every document "
+         "processing stack in production use today, that the archive studied was assembled "
+         "over roughly two decades of ordinary institutional practice without any intent to "
+         "serve as a research corpus, and that the measurements reported below were therefore "
+         "taken on a collection whose composition nobody designed. We propose no fix;"),
+     "B14 tom tat <= 250 tu"),
+    ("B14 Highlight qua 85 ky tu", "paper/main.tex",
+     doi("\\item A complete \\texttt{/ToUnicode} CMap halves the odds that a text layer is usable.",
+         "\\item A complete \\texttt{/ToUnicode} CMap halves the odds that a given text layer "
+         "turns out to be usable in practice."),
+     "B14 moi Highlight <= 85 ky tu"),
+    ("B3 hinh moi chua khai", os.path.join("code", "hinh-khong-dung.txt"),
+     doi("f7-mo-hinh-chu-so.pdf", "#f7-mo-hinh-chu-so.pdf"),
+     "B3 hinh khong dung deu da duoc khai"),
+    ("B15 ten macro co chu so", os.path.join("results", "so-lieu-e17.tex"),
+     lambda t: t + "\\newcommand{\\thuNghiem2}{1}\n", "B15 ten macro chi gom chu cai"),
 ]
 
 

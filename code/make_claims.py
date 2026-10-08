@@ -253,7 +253,8 @@ def main():
         ("aucDuBao", "%.3f" % auc_rg),
         # ty so kha di cua Corollary 1, va TRAN khong can gia thiet doc lap cua Proposition 3
         ("lrLambda", "%.3f" % (u / b)),
-        ("tranCao", "%.1f" % (100.0 * (1.0 - p_chu_so))),
+        # tranCao da chuyen sang code/e18_khoang_tin_cay.py, noi co ca khoang cua no.
+        # Giu o hai noi la hai CHO O, va cong B15 bat.
         ("luuTruN", "%d" % len(luu_tru)), ("luuTruHong", "%d" % lt_hong),
         ("luuTruTot", "%d" % lt_tot), ("luuTruQuet", "%d" % lt_quet),
         ("luuTruCoChu", "%d" % lt_co_chu),

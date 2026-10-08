@@ -163,7 +163,7 @@ def f13(m15):
 
 
 # ---------------------------------------------------------------- F14
-def f14(m15):
+def f14(m15, m18):
     TEN = {"So": "Document number", "Ngay": "Issue date", "CoQuan": "Issuing body"}
     # mau nhan danh cho truong bai noi ve (so hieu); hai truong kia la mau phu
     MAU = {"So": TX.ACCENT, "Ngay": TX.C["blue"], "CoQuan": TX.NEUTRAL}
@@ -183,21 +183,33 @@ def f14(m15):
                  "%s vs %.4f" % (hv, tinh))
         lam.append((k, dRec, dEps, tinh))
 
-    x = np.logspace(-2, 1, 400)
+    # ⛔ Nguoi doc ngoai do duoc: voi x den 10^1 thi duong so hieu ROI KHOI DAY khung o
+    # c/g ~ 1.86 va duong ngay roi khoi DINH o ~4.5, tuc hai duong "dung giua khong trung".
+    # Chon mien x sao cho MOI duong con nam trong khung, roi khai dung mien ay trong van.
+    x = np.logspace(-2, np.log10(2.0), 400)
     fig, ax = plt.subplots(figsize=(5.4, 2.9))
     for k, dRec, dEps, tinh in lam:
         y = 100.0 * (dRec - x * dEps)
         ax.plot(x, y, color=MAU[k], ls=NET[k], lw=1.1, label=TEN[k])
         if tinh is not None:
             ax.plot([tinh], [0], marker="o", ms=5, color=MAU[k], zorder=5)
-            ax.annotate(r"break-even $\lambda^\star=%.3f$" % tinh, xy=(tinh, 0),
-                        xytext=(tinh * 1.25, 14), fontsize=7.5, color=MAU[k],
-                        arrowprops=dict(arrowstyle="-", color=MAU[k], lw=0.6))
+            # dai tin cay cua lambda*: nguoi doc ngoai doi, va mot diem uoc in ba chu so
+            # thap phan ma khong co dai la dung cai bi bat.
+            if m18.get("bnSoHoaVonLo") and m18.get("bnSoHoaVonHi"):
+                lo, hi = float(m18["bnSoHoaVonLo"]), float(m18["bnSoHoaVonHi"])
+                ax.axvspan(lo, hi, color=MAU[k], alpha=0.12, lw=0)
+                nhan = (r"break-even $\lambda^\star=%.2f$" % tinh
+                        + "\n95%% CI [%.2f, %.2f]" % (lo, hi))
+            else:
+                nhan = r"break-even $\lambda^\star=%.3f$" % tinh
+            ax.annotate(nhan, xy=(tinh, 0), xytext=(tinh * 1.35, 15), fontsize=7.5,
+                        color=MAU[k], arrowprops=dict(arrowstyle="-", color=MAU[k], lw=0.6))
     ax.axhline(0, color="black", lw=0.6, alpha=0.6)
     ax.set_xscale("log")
     ax.set_xlabel(r"cost of a wrong identifier relative to a correct one, $c/g$")
     ax.set_ylabel("gain from re-OCR\n(percentage points of utility)", fontsize=8)
     ax.set_ylim(-40, 40)
+    ax.set_xlim(1e-2, 2.0)
     ax.legend(loc="lower left")
     TX.grid_mo(ax, "both")
     fig.tight_layout()
@@ -239,7 +251,7 @@ def main():
         return 1
     f12(mac)
     f13(m15)
-    f14(m15)
+    f14(m15, macro("so-lieu-e18.tex"))
     for ten, noi_dung in (("f10-quyet-dinh", F10), ("f11-giao-thuc", F11),
                           ("f15-co-che", F15), ("f16-ban-do", F16)):
         io.open(os.path.join(SRC, ten + ".tex"), "w", encoding="utf-8").write(noi_dung)

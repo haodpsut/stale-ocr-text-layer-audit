@@ -1,5 +1,5 @@
 == TIEM LOI THU CONG ==
-  sao luu 5 tep vao /var/folders/8p/vzhg2wsd23l2_qrp6hv4vwvw0000gn/T/tiem-loi-1dduxtmy, da xac minh bam
+  sao luu 10 tep vao /var/folders/8p/vzhg2wsd23l2_qrp6hv4vwvw0000gn/T/tiem-loi-bq3kbz5r, da xac minh bam
 
   kiem cong tren ban SACH truoc...
   ban sach: cong XANH
@@ -14,13 +14,19 @@
   DAT  B13 bang mo coi                     cong HONG · phep 'B13 moi bang' da bat
   DAT  B8 thuat ngu dan so                 cong HONG · phep 'B8' da bat
   DAT  B12 ten tac gia da bo               cong HONG · phep 'B12' da bat
-  DAT  B16 muc tran ra le                  cong HONG · phep 'B16' da bat
-  DAT  B14 vuot tran trang                 cong HONG · phep 'B14' da bat
+  DAT  B16 muc tran ra le                  cong HONG · phep 'B16 khong co muc thoc ra ngoai khoi chu' da bat
+  DAT  B14 vuot han muc trang              cong HONG · phep 'B14 so trang trong han muc' da bat
   DAT  B4 bang sinh ra ma khong dua vao    cong HONG · phep 'B4' da bat
   DAT  B15 macro moi chua khai             cong HONG · phep 'B15' da bat
   DAT  B17 ba nhanh khong cong dung n      cong HONG · phep 'B17 bnSoB' da bat
   DAT  B17 hoa von sai                     cong HONG · phep 'B17 hoa von' da bat
+  DAT  B18 tu dat mau rieng                cong HONG · phep 'B18 bo sinh hinh khong tu dat mau rieng' da bat
+  DAT  B18 hinh khong nap txstyle          cong HONG · phep 'B18 moi hinh TikZ deu nap txstyle.tex' da bat
+  DAT  B14 tom tat qua 250 tu              cong HONG · phep 'B14 tom tat <= 250 tu' da bat
+  DAT  B14 Highlight qua 85 ky tu          cong HONG · phep 'B14 moi Highlight <= 85 ky tu' da bat
+  DAT  B3 hinh moi chua khai               cong HONG · phep 'B3 hinh khong dung deu da duoc khai' da bat
+  DAT  B15 ten macro co chu so             cong HONG · phep 'B15 ten macro chi gom chu cai' da bat
 
-  phuc hoi: 5 tep, bam khop het
+  phuc hoi: 10 tep, bam khop het
 
-=> 16/16 ca bi bat dung phep
+=> 22/22 ca bi bat dung phep

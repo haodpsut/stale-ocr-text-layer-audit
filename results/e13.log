@@ -17,8 +17,9 @@
   DAT  du bao giam theo k
 
   du bao nam trong KTC do duoc o 1/2 do dai
-  => mo hinh KHOP (sai so chu so xap xi doc lap)
+  => KHONG KET LUAN DUOC: chi 2 do dai du mau, phep thu khong co suc bac bo
   doi chung: du lieu SINH TU mo hinh lech 0.138; du lieu that lech 0.139
-  DAT  doi chung: du lieu sinh tu mo hinh thi khop  [0.138]
+  HONG doi chung CO SUC: du lieu sinh tu mo hinh lech NHO HON HAN du lieu that  [sinh 0.138 vs that 0.139 => phep thu KHONG co suc]
 
-=> DAT (0 loi). Da sinh F7.
+=> CHUA DAT (1 loi). Da sinh F7.
+   loi: doi chung CO SUC: du lieu sinh tu mo hinh lech NHO HON HAN du lieu that

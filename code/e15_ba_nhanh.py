@@ -108,6 +108,7 @@ def main():
 
     # kq[truong][nhanh] = [dung, sai, im]
     kq = {t: {"A": [0, 0, 0], "B": [0, 0, 0]} for t in THU_TU}
+    dong = []          # (tep, truong, ket_cuc_A, ket_cuc_B) de bootstrap GHEP CAP
     dc = {"duong": 0, "khac": 0, "rong": 0, "n": 0}
     xong = 0
     for r in mau:
@@ -126,8 +127,10 @@ def main():
                                 ("co quan", 2, "dhkt")):
             if chuan is None:
                 continue
-            for nhanh, doc in (("A", ra), ("B", rb)):
-                kq[ten][nhanh][xep(doc[idx], chuan)] += 1
+            xa, xb = xep(ra[idx], chuan), xep(rb[idx], chuan)
+            kq[ten]["A"][xa] += 1
+            kq[ten]["B"][xb] += 1
+            dong.append((r["tep"], ten, xa, xb))
             # K3-K5: thu chinh bo XEP NHANH tren ba dau vao da biet truoc ket cuc
             dc["n"] += 1
             dc["duong"] += 1 if xep(chuan, chuan) == DUNG else 0
@@ -187,6 +190,14 @@ def main():
         for x in loi:
             print("   loi: " + x)
         return 1
+
+    # ⭐ Ghi TUNG DONG ket cuc. Nguoi doc ngoai doi khoang tin cay cho lambda*, ma lambda* la
+    # ti so hai ti le GHEP CAP tren cung tai lieu, nen phai bootstrap theo TAI LIEU.
+    import csv as _csv
+    with io.open(os.path.join(RES, "ket-cuc.csv"), "w", encoding="utf-8", newline="") as _f:
+        _w = _csv.writer(_f); _w.writerow(["tep", "truong", "A", "B"])
+        _w.writerows(dong)
+    print("  da ghi results/ket-cuc.csv (%d dong)" % len(dong))
 
     # ---- bang
     with io.open(os.path.join(RES, "tables", "tab-banhanh.tex"), "w", encoding="utf-8") as f:

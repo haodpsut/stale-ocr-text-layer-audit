@@ -64,8 +64,13 @@ def main():
     dung = set(re.findall(r"includegraphics\[[^\]]*\]\{\.\./figures/([^}]+)\}", src))
     kiem(dung <= co, "B3 moi hinh duoc chen deu ton tai", ", ".join(sorted(dung - co)))
     thua = co - dung
-    kiem(len(thua) <= 1, "B3 khong bo quen tep hinh",
-         "chua dung: " + ", ".join(sorted(thua)) if thua else "")
+    kb_h = os.path.join(GOC, "code", "hinh-khong-dung.txt")
+    khai_h = set()
+    if os.path.exists(kb_h):
+        khai_h = {l.split("#")[0].strip() for l in io.open(kb_h, encoding="utf-8")
+                  if l.split("#")[0].strip()}
+    kiem(not (thua - khai_h), "B3 hinh khong dung deu da duoc khai",
+         "chua khai: " + ", ".join(sorted(thua - khai_h)))
 
     bang_co = set(os.path.basename(x)[:-4]
                   for x in glob.glob(os.path.join(GOC, "results", "tables", "*.tex")))
@@ -127,8 +132,35 @@ def main():
         kiem(not mc, "B13 moi %s deu duoc nhac trong van" % ten,
              "mo coi: " + ", ".join(mc) if mc else "")
 
-    # ---- B14: tran tren. Bai mot cot de no ra, nen phai co MOC TREN chu khong chi moc duoi.
-    kiem(n_tr <= 30, "B14 khong vuot tran 30 trang", str(n_tr))
+    # ---- B14: cac moc cua CHINH IPM, thay cho moc trang.
+    # ⛔ Truoc day day la "<= 30 trang", dat khi bai dung `article` 11pt. Chuyen sang
+    # `elsarticle` thi cung noi dung ra 42 trang vi lop nay gian dong rong hon. So trang khong
+    # con so sanh duoc; cai IPM thuc su quy dinh la DO DAI TOM TAT va HIGHLIGHTS.
+    i0, i1 = txt.find("Document pipelines decide"), txt.find("Keywords")
+    n_tt = len(txt[i0:i1].split()) if 0 <= i0 < i1 else -1
+    kiem(0 < n_tt <= 250, "B14 tom tat <= 250 tu (moc IPM)", str(n_tt))
+    hls = re.findall(r"(?m)^\s*\\item (.+)$",
+                     re.search(r"(?s)\\begin\{highlights\}(.*?)\\end\{highlights\}", src).group(1)
+                     if re.search(r"(?s)\\begin\{highlights\}", src) else "")
+    kiem(3 <= len(hls) <= 5, "B14 co 3-5 Highlights (moc IPM)", str(len(hls)))
+    # ⛔ Ban dau toi dem tren BAN IN bang cach bat tung dong bat dau bang dau bullet. SAI:
+    # bullet dai BI NGAT DONG, nen phep do chi thay DONG DAU va mot bullet 82 ky tu lot qua.
+    # Dem dung la tren NGUON, sau khi khai trien macro, vi do la toan bo chuoi.
+    def no_macro(t):
+        for _ in range(4):
+            t = re.sub(r"\\([A-Za-z]+)\{\}|\\([A-Za-z]+)(?![A-Za-z])",
+                       lambda m: mac_hl.get(m.group(1) or m.group(2), ""), t)
+        return re.sub(r"[{}]|\\%", "%", t).strip()
+    mac_hl = {}
+    for f in glob.glob(os.path.join(GOC, "results", "so-lieu*.tex")):
+        for k, v in re.findall(r"\\newcommand\{\\(\w+)\}\{([^}]*)\}",
+                               io.open(f, encoding="utf-8").read()):
+            mac_hl[k] = v.replace("\\,", "")
+    qua = ["%d: %s" % (len(no_macro(h)), no_macro(h)[:40]) for h in hls
+           if len(no_macro(h)) > 85]
+    kiem(not qua, "B14 moi Highlight <= 85 ky tu",
+         "; ".join(qua[:2]) if qua else "dai nhat %d" % max([len(no_macro(h)) for h in hls] or [0]))
+    kiem(n_tr <= 45, "B14 so trang trong han muc tinh tao", str(n_tr))
 
     # ---- B15: macro do duoc ma khong dua vao bai. Khong tu dong la loi, nhung phai co NGUOI
     # quyet dinh: hoac dung no, hoac khai vao tep duoi kem ly do.
@@ -148,6 +180,11 @@ def main():
     for f in sorted(glob.glob(os.path.join(GOC, "results", "so-lieu*.tex"))):
         for k in re.findall(r"\\newcommand\{\\(\w+)\}", io.open(f, encoding="utf-8").read()):
             dem.setdefault(k, []).append(os.path.basename(f))
+    # ⛔ Ten macro LaTeX chi duoc gom CHU CAI. `\\c2Giao` -> `\\c` + `2Giao` -> chet o preamble
+    # voi mot thong bao hoan toan lac de. Da mac 2 lan (aucD0 hoi 24/09, c2Giao hom nay).
+    co_so = sorted(k for k in dem if not k.isalpha())
+    kiem(not co_so, "B15 ten macro chi gom chu cai", ", ".join(co_so[:4]))
+
     hai_cho = ["%s (%s)" % (k, ", ".join(v)) for k, v in sorted(dem.items()) if len(v) > 1]
     kiem(not hai_cho, "B15 khong macro nao co hai CHO O", "; ".join(hai_cho[:4]))
 
@@ -155,27 +192,42 @@ def main():
     kiem(not chua, "B15 macro khong dung deu da duoc khai",
          "%d chua khai: %s" % (len(chua), ", ".join(chua[:6])))
 
-    # ---- B16: muc o LE trang. Cong LaTeX bao 0 Overfull van co the de hinh thoc ra le;
-    # chi do tren ANH RENDER moi thay. Chi do le TRAI/PHAI/TREN: so trang nam o le DUOI.
+    # ---- B16: muc tran RA NGOAI KHOI CHU. Cong LaTeX bao 0 Overfull van co the de hinh
+    # thoc ra le; chi do tren ANH RENDER moi thay.
+    # ⛔ Ban dau day la mot DAI CO DINH 1,2cm tinh tu mep giay. Khi bai doi sang `elsarticle`
+    # (le 4,45cm) thi dai ay nam SAU BEN TRONG le, va ca tiem loi day muc ra 2,5cm van khong
+    # cham toi no: cong XANH tren mot loi THAT. Nay cong TU DO khoi chu tu chinh ban in roi
+    # bat moi thu thoc ra ngoai khoi ay, nen no dung voi moi lop tai lieu.
     import tempfile
-    dpi, le_cm, margin_cm = 100, 1.2, 2.5
+    dpi = 100
     tm = tempfile.mkdtemp()
     subprocess.run(["pdftoppm", "-r", str(dpi), "-png", os.path.join(P, "main.pdf"),
                     os.path.join(tm, "t")], capture_output=True)
     anh = sorted(glob.glob(os.path.join(tm, "*.png")))
-    bien = int(le_cm / 2.54 * dpi)
     try:
         from PIL import Image
-        xau = []
-        for a in anh:
-            im = Image.open(a).convert("L")
+        bien_trai, bien_phai, cao = [], [], []
+        for a_ in anh:
+            im = Image.open(a_).convert("L")
             w, h = im.size
-            for ten_vung, hop in (("trai", (0, 0, bien, h)), ("phai", (w - bien, 0, w, h)),
-                                  ("tren", (0, 0, w, bien))):
-                if im.crop(hop).getextrema()[0] < 128:
-                    xau.append("%s:%s" % (os.path.basename(a)[-7:-4], ten_vung))
-        kiem(not xau, "B16 khong co muc o le trai/phai/tren cua trang in",
-             ", ".join(xau[:6]))
+            cot = [x for x in range(w) if im.crop((x, 0, x + 1, h)).getextrema()[0] < 128]
+            if cot:
+                bien_trai.append(cot[0]); bien_phai.append(cot[-1]); cao.append((w, h))
+        if not bien_trai:
+            kiem(False, "B16 khong doc duoc muc tren ban in")
+        else:
+            # khoi chu = vi tri pho bien nhat, khong phai cuc tri (mot trang hong khong duoc
+            # keo ca moc di)
+            import statistics
+            kt = statistics.median(bien_trai)
+            kp = statistics.median(bien_phai)
+            lech = int(0.5 / 2.54 * dpi)        # cho phep thoc 0,5cm roi moi bao
+            xau = []
+            for a_, t_, p_ in zip(anh, bien_trai, bien_phai):
+                if t_ < kt - lech or p_ > kp + lech:
+                    xau.append("%s(%d..%d vs %d..%d)" % (os.path.basename(a_)[-7:-4],
+                                                        t_, p_, int(kt), int(kp)))
+            kiem(not xau, "B16 khong co muc thoc ra ngoai khoi chu", ", ".join(xau[:4]))
     except ImportError:
         kiem(False, "B16 can Pillow de do tren anh render")
 
@@ -236,7 +288,7 @@ def main():
     # cat caption roi dem, bo do ay cat nham ca than bai va bao trang 2 chi co 30 tu trong
     # khi no day chu. Dem tho thi khong the cat nham.
     thua = []
-    for i in range(1, n_tr):          # bo trang CUOI: do la duoi danh muc tham khao
+    for i in range(2, n_tr):          # bo trang DAU (frontmatter) va trang CUOI (duoi tai lieu)
         tt = subprocess.run(["pdftotext", "-f", str(i), "-l", str(i),
                              os.path.join(P, "main.pdf"), "-"],
                             capture_output=True, text=True).stdout

@@ -1,0 +1,3 @@
+# Hinh SINH RA ma ban thao khong chen. Cong B3 bat buoc khai o day kem ly do.
+f7-mo-hinh-chu-so.pdf   # mo hinh (1-p)^k da RUT 24/09: hinh con de kiem tra lai viec rut, khong vao bai
+f5-theo-loai.pdf        # bo 08/10 theo doc ngoai: bon cot deu 100%, trung het voi Bang 3

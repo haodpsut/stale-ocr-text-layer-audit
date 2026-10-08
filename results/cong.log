@@ -1,0 +1,51 @@
+== CONG TONG CHO BAN THAO ==
+  DAT  B1 dung lai sach thanh cong
+  DAT  B2 0 loi LaTeX  [0]
+  DAT  B2 0 macro thieu  [0]
+  DAT  B2 0 tham chieu treo  [0]
+  DAT  B2 0 trich dan treo  [0]
+  DAT  B2 0 Overfull  [0]
+  DAT  B3 moi hinh duoc chen deu ton tai
+  DAT  B3 hinh khong dung deu da duoc khai  [chua khai: ]
+  DAT  B4 moi bang da sinh deu duoc dua vao bai  [thua: ]
+  DAT  B5 khong trich muc ngoai bib
+  DAT  B5 khong muc bib nao bi bo quen
+  DAT  B6 khong em-dash
+  DAT  B10 moi ti le phan tram la macro
+  DAT  B7 khong so ba bon chu so go tay trong than bai
+  DAT  B8 thuat ngu dan so nhat quan
+  DAT  B9 trang >= 10  [42]
+  DAT  B9 hinh >= 10  [14]
+  DAT  B9 bang >= 8  [9]
+  DAT  B9 tham khao >= 36  [39]
+  DAT  B9 phuong trinh >= 8  [22]
+  DAT  B9 khoi thuat toan >= 2  [2]
+  DAT  B11 bo sinh so chay lai van xanh
+  DAT  B12 khong con ten hoac email da bo
+  DAT  B13 moi hinh deu duoc nhac trong van
+  DAT  B13 moi bang deu duoc nhac trong van
+  DAT  B14 tom tat <= 250 tu (moc IPM)  [242]
+  DAT  B14 co 3-5 Highlights (moc IPM)  [5]
+  DAT  B14 moi Highlight <= 85 ky tu  [dai nhat 83]
+  DAT  B14 so trang trong han muc tinh tao  [42]
+  DAT  B15 ten macro chi gom chu cai
+  DAT  B15 khong macro nao co hai CHO O
+  DAT  B15 macro khong dung deu da duoc khai  [0 chua khai: ]
+  DAT  B16 khong co muc thoc ra ngoai khoi chu
+  DAT  B17 AUC = (1+u-b)/2 khop macro  [0.2520 vs 0.252]
+  DAT  B17 Lambda = u/b khop macro  [0.5010 vs 0.501]
+  DAT  B17 tran 1-p khop macro  [63.20 vs 63.2]
+  DAT  B17 bnSoA: ba nhanh cong lai dung n  [200 vs 200]
+  DAT  B17 bnSoB: ba nhanh cong lai dung n  [200 vs 200]
+  DAT  B17 bnNgayA: ba nhanh cong lai dung n  [100 vs 100]
+  DAT  B17 bnNgayB: ba nhanh cong lai dung n  [100 vs 100]
+  DAT  B17 bnCoQuanA: ba nhanh cong lai dung n  [200 vs 200]
+  DAT  B17 bnCoQuanB: ba nhanh cong lai dung n  [200 vs 200]
+  DAT  B17 hoa von = dRec/dEps khop macro  [0.2245 vs 0.224]
+  DAT  B18 moi hinh TikZ deu nap txstyle.tex cua nha
+  DAT  B18 co ban txstyle.tex trong thu muc bai
+  DAT  B18 bo sinh hinh khong tu dat mau rieng
+  DAT  B19 khong trang nao chi co hinh/bang
+  DAT  B19 chu trong hinh >= 6pt sau khi thu phong
+
+=> DAT, san sang gui doc ngoai (0 loi)
