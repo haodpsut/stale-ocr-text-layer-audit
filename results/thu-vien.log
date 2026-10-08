@@ -1,0 +1,117 @@
+Ignoring wrong pointing object 6 0 (offset 0)
+Ignoring wrong pointing object 8 0 (offset 0)
+Ignoring wrong pointing object 10 0 (offset 0)
+Ignoring wrong pointing object 12 0 (offset 0)
+Ignoring wrong pointing object 14 0 (offset 0)
+Ignoring wrong pointing object 16 0 (offset 0)
+Ignoring wrong pointing object 18 0 (offset 0)
+Ignoring wrong pointing object 20 0 (offset 0)
+Ignoring wrong pointing object 22 0 (offset 0)
+Ignoring wrong pointing object 24 0 (offset 0)
+Ignoring wrong pointing object 26 0 (offset 0)
+Ignoring wrong pointing object 28 0 (offset 0)
+Ignoring wrong pointing object 30 0 (offset 0)
+Ignoring wrong pointing object 39 0 (offset 0)
+Ignoring wrong pointing object 41 0 (offset 0)
+Ignoring wrong pointing object 49 0 (offset 0)
+Ignoring wrong pointing object 51 0 (offset 0)
+Ignoring wrong pointing object 6 0 (offset 0)
+Ignoring wrong pointing object 8 0 (offset 0)
+Ignoring wrong pointing object 10 0 (offset 0)
+Ignoring wrong pointing object 12 0 (offset 0)
+Ignoring wrong pointing object 14 0 (offset 0)
+Ignoring wrong pointing object 16 0 (offset 0)
+Ignoring wrong pointing object 18 0 (offset 0)
+Ignoring wrong pointing object 20 0 (offset 0)
+Ignoring wrong pointing object 22 0 (offset 0)
+Ignoring wrong pointing object 24 0 (offset 0)
+Ignoring wrong pointing object 26 0 (offset 0)
+Ignoring wrong pointing object 28 0 (offset 0)
+Ignoring wrong pointing object 34 0 (offset 0)
+Ignoring wrong pointing object 45 0 (offset 0)
+Ignoring wrong pointing object 57 0 (offset 0)
+Ignoring wrong pointing object 69 0 (offset 0)
+Ignoring wrong pointing object 6 0 (offset 0)
+Ignoring wrong pointing object 8 0 (offset 0)
+Ignoring wrong pointing object 10 0 (offset 0)
+Ignoring wrong pointing object 12 0 (offset 0)
+Ignoring wrong pointing object 14 0 (offset 0)
+Ignoring wrong pointing object 16 0 (offset 0)
+Ignoring wrong pointing object 18 0 (offset 0)
+Ignoring wrong pointing object 20 0 (offset 0)
+Ignoring wrong pointing object 22 0 (offset 0)
+Ignoring wrong pointing object 24 0 (offset 0)
+Ignoring wrong pointing object 26 0 (offset 0)
+Ignoring wrong pointing object 32 0 (offset 0)
+Ignoring wrong pointing object 43 0 (offset 0)
+Ignoring wrong pointing object 52 0 (offset 0)
+Ignoring wrong pointing object 57 0 (offset 0)
+Ignoring wrong pointing object 59 0 (offset 0)
+Ignoring wrong pointing object 61 0 (offset 0)
+Ignoring wrong pointing object 63 0 (offset 0)
+Ignoring wrong pointing object 6 0 (offset 0)
+Ignoring wrong pointing object 8 0 (offset 0)
+Ignoring wrong pointing object 10 0 (offset 0)
+Ignoring wrong pointing object 12 0 (offset 0)
+Ignoring wrong pointing object 14 0 (offset 0)
+Ignoring wrong pointing object 16 0 (offset 0)
+Ignoring wrong pointing object 18 0 (offset 0)
+Ignoring wrong pointing object 20 0 (offset 0)
+Ignoring wrong pointing object 22 0 (offset 0)
+Ignoring wrong pointing object 24 0 (offset 0)
+Ignoring wrong pointing object 26 0 (offset 0)
+Ignoring wrong pointing object 28 0 (offset 0)
+Ignoring wrong pointing object 40 0 (offset 0)
+Ignoring wrong pointing object 61 0 (offset 0)
+Ignoring wrong pointing object 63 0 (offset 0)
+Ignoring wrong pointing object 68 0 (offset 0)
+Ignoring wrong pointing object 6 0 (offset 0)
+Ignoring wrong pointing object 8 0 (offset 0)
+Ignoring wrong pointing object 10 0 (offset 0)
+Ignoring wrong pointing object 12 0 (offset 0)
+Ignoring wrong pointing object 14 0 (offset 0)
+Ignoring wrong pointing object 16 0 (offset 0)
+Ignoring wrong pointing object 18 0 (offset 0)
+Ignoring wrong pointing object 20 0 (offset 0)
+Ignoring wrong pointing object 22 0 (offset 0)
+Ignoring wrong pointing object 24 0 (offset 0)
+Ignoring wrong pointing object 26 0 (offset 0)
+Ignoring wrong pointing object 33 0 (offset 0)
+Ignoring wrong pointing object 41 0 (offset 0)
+Ignoring wrong pointing object 53 0 (offset 0)
+Ignoring wrong pointing object 65 0 (offset 0)
+Ignoring wrong pointing object 6 0 (offset 0)
+Ignoring wrong pointing object 8 0 (offset 0)
+Ignoring wrong pointing object 10 0 (offset 0)
+Ignoring wrong pointing object 12 0 (offset 0)
+Ignoring wrong pointing object 14 0 (offset 0)
+Ignoring wrong pointing object 16 0 (offset 0)
+Ignoring wrong pointing object 18 0 (offset 0)
+Ignoring wrong pointing object 20 0 (offset 0)
+Ignoring wrong pointing object 22 0 (offset 0)
+Ignoring wrong pointing object 24 0 (offset 0)
+Ignoring wrong pointing object 30 0 (offset 0)
+Ignoring wrong pointing object 48 0 (offset 0)
+== PHEP GIET U5: bo boc pho thong co tu chuyen ma cu khong? ==
+   seed=20260923, 3 trang dau moi tep
+
+== DOI CHUNG DUONG: nhom LOP CHU TOT (phai ra ti le dau CAO) (n=20) ==
+  bo boc           tb dau trung vi    tot/n   ghi chu
+  pdftotext         0.233    0.225    20/20    
+  PyMuPDF           0.233    0.225    20/20    
+  pdfplumber        0.233    0.225    20/20    
+  pypdf             0.233    0.225    20/20    
+  pdfminer.six      0.233    0.225    20/20    
+
+== NHOM LOP CHU HONG (neu co bo nao ra ti le CAO thi U5 chet) (n=20) ==
+  bo boc           tb dau trung vi    tot/n   ghi chu
+  pdftotext         0.000    0.000     0/20    
+  PyMuPDF           0.000    0.000     0/20    
+  pdfplumber        0.000    0.000     0/20    
+  pypdf             0.000    0.000     0/20    
+  pdfminer.six      0.000    0.000     0/20    
+
+== PHAN QUYET ==
+  doi chung duong: DAT, tin duoc so duoi
+  KHONG bo boc nao cuu duoc ma cu  =>  U5 CON SONG
+  ca 5 bo deu tra ve rac ma KHONG bao loi: dung la 'sai im lang'

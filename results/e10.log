@@ -1,0 +1,21 @@
+== E10: ba truong, n=200 (100 tep co ngay trong ten) ==
+  ... 40
+  ... 80
+  ... 120
+  ... 160
+  ... 200
+
+== TU KIEM VAN BAN CHUAN CHO NGAY ==
+  OCR doc duoc ngay o 39 ca: khop nam 35, lech nam 4
+  DAT  nam trong ten tep khop nam doc duoc nhieu hon la lech  [35 vs 4]
+
+  truong         n      A lop chu      B OCR moi  McNemar p   Holm p
+  so hieu      200     0 ( 0.0%)    11 ( 5.5%)   9.77e-04 9.77e-04
+                             [0.0, 1.9]     [3.1, 9.6]  b=0 c=11 OR=inf
+  ngay         100     3 ( 3.0%)    34 (34.0%)   7.92e-09 2.37e-08
+                             [1.0, 8.5]   [25.5, 43.7]  b=1 c=32 OR=32.0
+  co quan      200   188 (94.0%)   200 (100.0%)   4.88e-04 9.77e-04
+                           [89.8, 96.5]  [98.1, 100.0]  b=0 c=12 OR=inf
+  DAT  co it nhat 2 truong du mau  [3 truong]
+
+=> DAT (0 loi)

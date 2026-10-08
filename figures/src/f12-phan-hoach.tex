@@ -1,0 +1,27 @@
+\documentclass[border=3pt]{standalone}
+\usepackage{tikz}
+\input{txstyle.tex}
+\begin{document}
+\begin{tikzpicture}[x=1mm, y=1mm]
+% ⛔ Ban dau ve CA SAU o con tren mot hang: hinh rong 678pt, nhet vao cot 431pt thi chu
+% trong hinh con 5,1pt, duoi san 6pt cua kit. Nhanh PHAI la nhanh phu (bai khong tuyen bo
+% gi ve no) nen gop lai mot o, so hoc van dong kin va chu ve lai 8pt.
+\node[blk, minimum width=34mm] (all) at (  0, 36) {archive as found\\\textbf{5048} PDF files};
+\node[blk, minimum width=34mm] (in)  at (-34, 18) {follows the filing\\convention\\\textbf{3877}};
+\node[blk, minimum width=40mm, font=\scriptsize] (out) at ( 42, 18)
+  {outside the convention: \textbf{1171}\\(887 usable, 257 none, 27 unusable)};
+\node[sml, minimum width=28mm] (inq) at (-74,  0) {no text layer\\\textbf{2455}};
+\node[prop,minimum width=28mm, minimum height=8mm, font=\scriptsize] (inh) at (-34, 0)
+  {text layer present\\\textbf{1422}};
+\node[sml, minimum width=28mm] (int) at (  6,  0) {usable text layer\\\textbf{0}};
+\node[prop, minimum width=52mm, minimum height=9mm] (adm) at (-34,-20)
+  {every one of the 1422 is admitted without OCR,\\and every one is unusable};
+\draw[flow] (all) -- (in);   \draw[flow] (all) -- (out);
+\draw[flow] (in)  -- (inq);  \draw[flow] (in)  -- (inh);  \draw[flow] (in) -- (int);
+\draw[flow] (inh) -- (adm);
+\begin{scope}[on background layer]
+  \node[zone, fit=(inq)(inh)(int), inner sep=2.5mm] (z1) {};
+\end{scope}
+\node[zlab, below=0.5mm of z1.south, xshift=-18mm] {RECORDS IN THE FILING CONVENTION};
+\end{tikzpicture}
+\end{document}

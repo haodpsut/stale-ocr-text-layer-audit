@@ -1,0 +1,22 @@
+\documentclass[border=3pt]{standalone}
+\usepackage{tikz}
+\input{txstyle.tex}
+\tikzset{
+  dec/.style={blk, fill=black!6, minimum width=26mm, minimum height=9mm},
+}
+\begin{document}
+\begin{tikzpicture}[x=1mm, y=1mm]
+\node[blk, minimum width=34mm] (pdf) at (0, 34) {PDF from the archive};
+\node[dec]                     (q)   at (0, 17) {text layer present?};
+\node[blk, minimum width=26mm] (ocr) at (42, 17) {run OCR};
+\node[prop, minimum width=34mm](skip) at (0,  0) {use the embedded text};
+\node[blk, minimum width=34mm] (idx) at (0,-17) {index, search,\\citation linking};
+\draw[flow] (pdf) -- (q);
+\draw[flow] (q) -- node[alab, above] {no} (ocr);
+\draw[flow] (q) -- node[alab, right] {yes} (skip);
+\draw[flow] (skip) -- (idx);
+\draw[flow] (ocr.south) |- (idx.east);
+\node[alab, text=accent, align=left, anchor=west, text width=36mm]
+  at (22, 0) {no error is raised on this branch, whatever the text says};
+\end{tikzpicture}
+\end{document}

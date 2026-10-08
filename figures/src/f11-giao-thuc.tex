@@ -1,0 +1,23 @@
+\documentclass[border=3pt]{standalone}
+\usepackage{tikz}
+\input{txstyle.tex}
+\begin{document}
+\begin{tikzpicture}[x=1mm, y=1mm]
+\node[blk, minimum width=26mm] (page) at (0,   0) {one page\\image};
+\node[blk, minimum width=30mm] (a)    at (36, 11) {A: embedded\\text layer};
+\node[blk, minimum width=30mm] (b)    at (36,-11) {B: re-OCR of\\that image};
+\node[prop,minimum width=32mm] (g)    at (80,-24) {ground truth from\\the filing system};
+\node[blk, minimum width=32mm] (cmp)  at (80,  0) {per-field comparison\\McNemar, Wilson, Holm};
+\draw[flow] (page) -- (a);
+\draw[flow] (page) -- (b);
+\draw[flow] (a.east) -| (cmp.north);
+\draw[flow] (b.east) -| ([xshift=-6mm]cmp.south);
+\draw[flow] (g.north) -- ([xshift=6mm]cmp.south);
+\begin{scope}[on background layer]
+  \node[zone, fit=(a)(b), inner sep=3mm] (z) {};
+\end{scope}
+\node[zlab, above=0.5mm of z.north] {TWO READINGS OF ONE PAGE};
+\node[alab, align=left, anchor=west, text width=30mm] at (96,-24)
+  {neither arm produced this value};
+\end{tikzpicture}
+\end{document}

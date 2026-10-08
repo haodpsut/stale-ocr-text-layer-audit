@@ -1,0 +1,35 @@
+\documentclass[border=3pt]{standalone}
+\usepackage{tikz}
+\input{txstyle.tex}
+\tikzset{
+  lay/.style={blk, minimum width=44mm, minimum height=8mm, font=\scriptsize},
+}
+\begin{document}
+\begin{tikzpicture}[x=1mm, y=1mm]
+% ---- stale-OCR scan ----
+\node[lay, fill=black!10, draw=inkgray!70] (im1) at (0, 10) {page image, full bleed};
+\node[prop, minimum width=44mm, minimum height=8mm, font=\scriptsize] (tx1) at (0, 1)
+  {invisible text layer, written by an\\OCR engine at digitisation time};
+\begin{scope}[on background layer]
+  \node[zone, fit=(im1)(tx1), inner sep=2.5mm] (z1) {};
+\end{scope}
+\node[zlab, above=0.5mm of z1.north] {STALE-OCR SCAN};
+% ---- born-digital ----
+\node[lay] (tx2) at (0,-26) {text objects placed by\\the authoring application};
+\begin{scope}[on background layer]
+  \node[zone, fit=(tx2), inner sep=2.5mm] (z2) {};
+\end{scope}
+\node[zlab, above=0.5mm of z2.north] {BORN-DIGITAL FILE};
+% ---- what extraction reads ----
+\node[alab, anchor=east, align=right, text width=24mm] (e1) at (-28, 1)
+  {extraction\\reads here};
+\node[alab, anchor=east, align=right, text width=24mm] (e2) at (-28,-26)
+  {extraction\\reads here};
+\draw[flow] (e1) -- (tx1.west);
+\draw[flow] (e2) -- (tx2.west);
+\node[alab, anchor=west, align=left, text width=36mm] at (28, 5.5)
+  {a human reads the image above; a library returns the layer below, and the two need not agree};
+\node[alab, anchor=west, align=left, text width=36mm] at (28,-26)
+  {the glyphs on the page \emph{are} this text};
+\end{tikzpicture}
+\end{document}

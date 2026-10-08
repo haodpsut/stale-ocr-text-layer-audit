@@ -1,0 +1,27 @@
+== E15: ba nhanh ket cuc, n=200 ==
+  ... 25
+  ... 50
+  ... 75
+  ... 100
+  ... 125
+  ... 150
+  ... 175
+  ... 200
+
+  truong/nhanh        n   dung   sai im       im      Rec      eps
+  co quan / A       200    188        0       12    94.0%     0.0%
+  co quan / B       200    200        0        0   100.0%     0.0%
+  ngay / A          100      3        7       90     3.0%     7.0%
+  ngay / B          100     34        5       61    34.0%     5.0%
+  so hieu / A       200      0        1      199     0.0%     0.5%
+  so hieu / B       200     11       50      139     5.5%    25.0%
+  DAT  K1 ba nhanh cong lai dung n o moi truong
+  DAT  K2 doc duoc e10.log de so hai nguon
+  DAT  K2 so DUNG khop chinh xac E10 chay doc lap
+  DAT  K3 chuan -> DUNG  [500/500]
+  DAT  K4 gia tri khac -> SAI IM (khong lan sang IM)  [500/500]
+  DAT  K5 None -> IM (khong lan sang SAI IM)  [500/500]
+  DAT  K6 moi truong co eps=0 deu duoc giai thich
+
+  da ghi results/tables/tab-banhanh.tex va results/so-lieu-e15.tex
+=> DAT

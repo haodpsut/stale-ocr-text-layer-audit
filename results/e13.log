@@ -1,0 +1,24 @@
+== E13: mo hinh (1-p)^k cho dinh danh (n=400) ==
+  ... 80/400
+  ... 160/400
+  ... 240/400
+  ... 320/400
+  ... 400/400
+
+  OCR tra ve mot so o 92/400 ca
+  DAT  du cap de uoc p  [92 cap]
+  cap CUNG do dai: 44  ·  chu so sai 46/125  =>  p = 0.3680
+  DAT  p nam trong (0,1)  [0.3680]
+
+  k         n    do duoc     du bao       KTC 95% do
+  2        18     0.222      0.399  [0.090, 0.452]
+  3        73     0.151      0.252  [0.086, 0.250]
+  DAT  co it nhat 2 do dai du mau  [2]
+  DAT  du bao giam theo k
+
+  du bao nam trong KTC do duoc o 1/2 do dai
+  => mo hinh KHOP (sai so chu so xap xi doc lap)
+  doi chung: du lieu SINH TU mo hinh lech 0.138; du lieu that lech 0.139
+  DAT  doi chung: du lieu sinh tu mo hinh thi khop  [0.138]
+
+=> DAT (0 loi). Da sinh F7.

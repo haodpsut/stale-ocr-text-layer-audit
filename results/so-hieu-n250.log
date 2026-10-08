@@ -1,0 +1,31 @@
+== SO HIEU, n=250, van ban chuan = ten tep ==
+  ... 50
+  ... 100
+  ... 150
+  ... 200
+  ... 250
+
+  nguon doc                 so ca    ti le KTC 95%           
+  A lop chu nhung san
+    DUNG                        0     0.0%  [0.0%, 1.5%]
+    SAI TRONG NHU THAT          0     0.0%  [0.0%, 1.5%]
+    KHONG RA SO               250   100.0%  [98.5%, 100.0%]
+  B OCR hien dai
+    DUNG                        9     3.6%  [1.9%, 6.7%]
+    SAI TRONG NHU THAT         50    20.0%  [15.5%, 25.4%]
+    KHONG RA SO               191    76.4%  [70.8%, 81.2%]
+    ⭐ KHI DA RA MOT SO thi dung 15.3% (9/59)  [8.2%, 26.5%]
+
+== VI DU B SAI ==
+  0037_TB_0000_DHKT.pdf        chuan=37    doc ra=3    
+  0309_QD_2014_DHKT_16-05.pdf  chuan=309   doc ra=503  
+  0112_UNK_0000_NA_dhkt.pdf    chuan=112   doc ra=44   
+  0145_QD_0000_DHKT.pdf        chuan=145   doc ra=445  
+  0234_QD_0000_DHKT.pdf        chuan=234   doc ra=2    
+  0021_QD_2016_NA.pdf          chuan=21    doc ra=2    
+  0230_QD_0000_DHKT.pdf        chuan=230   doc ra=4    
+  0677_QD_0000_NA.pdf          chuan=677   doc ra=6727 
+  0147_QD_2016_NA.pdf          chuan=147   doc ra=443  
+  0296_QD_2014_DHKT_16-05.pdf  chuan=296   doc ra=496  
+
+  n thuc te = 250

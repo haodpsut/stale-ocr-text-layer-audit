@@ -1,0 +1,113 @@
+# Macro DO DUOC ma KHONG dua vao van xuoi. Cong B15 bat buoc khai o day kem ly do.
+#
+# Vi sao bat khai thay vi bo qua: ngay 08/10 cong bao XANH trong khi bai dang bo roi 99 con so
+# da do xong, trong do co AUC cua CHINH BO DO NOI DUNG (aucDone = 0,999) va hai dau mut cua
+# khoang trong giua hai cum. Ba cai ay dang le phai nam trong bai, va da duoc dua vao. Phan con
+# lai duoi day la co y, moi dong mot ly do.
+
+# ---- nam trong BANG sinh tu dong, khong nhac lai trong van (tranh hai cho giu cung mot so)
+soQuet          # tab-corpus
+soHong          # tab-corpus
+tiHong          # tab-corpus
+tiTot           # tab-corpus
+aucDfour        # tab-bodo, D4 so font
+cBonAKhong      # tab-sohieu
+cBonBSai        # tab-sohieu
+cBonBKhong      # tab-sohieu
+truongCoQuanN   # tab-bontruong
+truongCoQuanB   # tab-bontruong
+loaiSo          # tab-loai
+loaiMin         # tab-loai
+loaiMax         # tab-loai
+loaiPhu         # tab-loai, do phu cua phan tang theo loai
+
+# ---- thuoc phep do DA RUT, giu lai de chay lai duoc chu khong de trich dan
+# E12 phan tang theo nam: do phu 11%, chi 2 nam du mau (xem §threats)
+namKhongRo
+namMin
+namMax
+# E13 mo hinh (1-p)^k: rut 24/09 vi doi chung cho thay phep thu khong co suc bac bo.
+# CHI digitP, digitPLo, digitPHi, digitPN con duoc trich, vi chung la PHEP DO chu khong
+# phai mo hinh; tranCao dan xuat tu digitP cho Proposition 3.
+digitN
+digitSai
+digitTong
+digitKhop
+digitSoK
+
+# ---- trung lap voi mot macro khac dang dung, giu de khong pha ban doc cu
+luuTruHong      # bang het voi luuTruCoChu
+tuHongThieu     # = 0, khong co tep HONG nao thieu tu dien font; chi can khai tuTotThieu
+
+# ---- E15: bo so day du cua phan ra ba nhanh. Van xuoi trich mot phan, ca bo nam o
+# tab-banhanh va o hai hinh f13/f14, nen tung macro mot khong can xuat hien trong cau.
+# ⚠ Giu DU ca bo chu khong cat bot: hinh va bang doc thang tu day, va neu cat thi lan sau
+# sua hinh lai phai chay lai phep do.
+bnCoQuanAN
+bnCoQuanADung
+bnCoQuanASai
+bnCoQuanAIm
+bnCoQuanARec
+bnCoQuanAEps
+bnCoQuanAAbst
+bnCoQuanARa
+bnCoQuanAPi
+bnCoQuanAPiSai
+bnCoQuanAPiLo
+bnCoQuanAPiHi
+bnCoQuanBN
+bnCoQuanBDung
+bnCoQuanBSai
+bnCoQuanBIm
+bnCoQuanBRec
+bnCoQuanBEps
+bnCoQuanBAbst
+bnCoQuanBRa
+bnCoQuanBPiSai
+bnCoQuanBPiLo
+bnCoQuanBPiHi
+bnCoQuanDRec
+bnCoQuanDEps
+bnCoQuanHoaVon
+bnCoQuanTrum
+bnNgayAN
+bnNgayADung
+bnNgayASai
+bnNgayAIm
+bnNgayARec
+bnNgayAEps
+bnNgayAAbst
+bnNgayARa
+bnNgayAPi
+bnNgayAPiSai
+bnNgayAPiLo
+bnNgayAPiHi
+bnNgayBN
+bnNgayBDung
+bnNgayBSai
+bnNgayBIm
+bnNgayBRec
+bnNgayBEps
+bnNgayBAbst
+bnNgayBRa
+bnNgayBPiSai
+bnNgayBPiLo
+bnNgayBPiHi
+bnNgayHoaVon
+bnNgayTrum
+bnSoADung
+bnSoASai
+bnSoAIm
+bnSoARec
+bnSoAEps
+bnSoAAbst
+bnSoAPi
+bnSoAPiSai
+bnSoAPiLo
+bnSoAPiHi
+bnSoBDung
+bnSoBSai
+bnSoBIm
+bnSoBEps
+bnSoBAbst
+bnSoTrum

@@ -1,0 +1,24 @@
+\documentclass[border=3pt]{standalone}
+\usepackage{tikz}
+\input{txstyle.tex}
+\begin{document}
+\begin{tikzpicture}[x=1mm, y=1mm]
+\node[blk, minimum width=50mm] (root) at (0, 30)
+  {\textbf{200} admitted documents, document number read};
+\node[blk, minimum width=30mm] (A) at (-44, 14) {A: embedded\\text layer};
+\node[blk, minimum width=30mm] (B) at ( 44, 14) {B: re-OCR of\\the same page};
+\node[sml] (ag) at (-70,  0) {correct\\\textbf{0}};
+\node[prop, minimum width=16mm, minimum height=8mm, font=\scriptsize] (as) at (-44, 0)
+  {silent error\\\textbf{1}};
+\node[sml] (ai) at (-18,  0) {abstain\\\textbf{199}};
+\node[sml] (bg) at ( 18,  0) {correct\\\textbf{11}};
+\node[prop, minimum width=16mm, minimum height=8mm, font=\scriptsize] (bs) at ( 44, 0)
+  {silent error\\\textbf{50}};
+\node[sml] (bi) at ( 70,  0) {abstain\\\textbf{139}};
+\draw[flow] (root) -- (A); \draw[flow] (root) -- (B);
+\foreach \x in {ag,as,ai} \draw[flow] (A) -- (\x);
+\foreach \x in {bg,bs,bi} \draw[flow] (B) -- (\x);
+\node[alab, text=accent, align=center, text width=52mm] at (44,-13)
+  {when B emits a number it is wrong \textbf{82.0\%} of the time};
+\end{tikzpicture}
+\end{document}
