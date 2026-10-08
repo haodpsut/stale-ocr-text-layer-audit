@@ -2,32 +2,46 @@
 \usepackage{tikz}
 \input{txstyle.tex}
 \tikzset{
-  ex/.style={blk, minimum width=52mm, minimum height=7mm, align=left, font=\scriptsize},
+  ex/.style={blk, minimum width=54mm, minimum height=7mm, align=left, font=\scriptsize},
   cl/.style={prop, minimum width=40mm, minimum height=10mm, font=\scriptsize},
+  shr/.style={blk, draw=accent, fill=accent!5, minimum width=54mm, minimum height=7mm,
+              align=left, font=\scriptsize},
 }
 \begin{document}
 \begin{tikzpicture}[x=1mm, y=1mm]
-% ⛔ Xep theo CUM TUYEN BO chu khong theo so thu tu phep do: ban xep theo so thu tu co ba
-% mui ten CAT QUA o khac, va log pdflatex sach tuyet doi ca ba lan.
-\node[ex] (e1) at (0,   0) {E1 whole-archive classification};
-\node[ex] (e2) at (0,  -9) {E2 producer $\times$ text-layer health};
-\node[ex] (e3) at (0, -18) {E6--E7 $\rho$ distribution, threshold sweep};
-\node[ex] (e4) at (0, -31) {E3 \texttt{/ToUnicode} in both classes};
-\node[ex] (e5) at (0, -40) {E8 content vs structural detectors};
-\node[ex] (e6) at (0, -53) {E4 five extraction libraries};
-\node[ex] (e7) at (0, -66) {E9 rendering-resolution sweep};
-\node[ex] (e8) at (0, -75) {E10 three fields, paired readings};
-\node[ex] (e9) at (0, -84) {E15 three-way outcome split};
-\node[cl] (c1) at (86,  -9) {C1 prevalence\\and provenance};
-\node[cl] (c2) at (86, -35) {C2 the structural\\signal inverts};
-\node[cl] (c3) at (86, -53) {C3 silent failure\\of extraction};
-\node[cl] (c4) at (86, -75) {C4 field-level damage\\and its cost};
-\foreach \x in {e1,e2,e3} \draw[flow] (\x.east) -- (c1.west);
-\foreach \x in {e4,e5}    \draw[flow] (\x.east) -- (c2.west);
+% ⛔ Ban truoc ve E2 -> C1 va E3 -> C2 thanh HAI chuoi roi, trong khi §5.3 do duoc rang ca hai
+% dua tren CUNG 1441 tep. Hinh nay ton tai de ngan nguoi doc suy ra su doc lap khong co that,
+% va no lai pham dung dieu ay. Nay ba phep do ay nam trong MOT KHOI DUNG CHUNG.
+\node[ex]  (e1)  at (0,    0) {E1 whole-archive classification};
+\node[ex]  (e3)  at (0,   -9) {E6--E7 $\rho$ distribution, threshold sweep};
+\node[shr] (s1)  at (0,  -24) {E2 producer $\times$ text-layer health};
+\node[shr] (s2)  at (0,  -33) {E3 \texttt{/ToUnicode} in both classes};
+\node[shr] (s3)  at (0,  -42) {E17 conditioning on the producer};
+\node[ex]  (e5)  at (0,  -62) {E8 content vs structural detectors};
+\node[ex]  (e6)  at (0,  -73) {E4 five extraction libraries};
+\node[ex]  (e7)  at (0,  -81) {E9 rendering-resolution sweep};
+\node[ex]  (e8)  at (0,  -90) {E10 three fields, paired readings};
+\node[ex]  (e9)  at (0,  -99) {E15 three-way outcome split};
+\node[ex]  (e10) at (0, -108) {E18 bootstrap intervals for $p$ and $\lambda^\star$};
+\begin{scope}[on background layer]
+  \node[zone, draw=accent!70, fit=(s1)(s2)(s3), inner sep=3mm] (zs) {};
+\end{scope}
+\node[zlab, text=accent, align=center, text width=56mm, below=0.5mm of zs.south]
+  {C1 AND C4 SHARE THESE \textbf{1441} FILES};
+\node[cl] (c1) at (94,   -9) {C1 prevalence\\and provenance};
+\node[cl] (c2) at (94,  -33) {C4 the structural\\signal inverts};
+\node[cl] (c3) at (94,  -73) {C3 silent failure\\of extraction};
+\node[cl] (c4) at (94,  -96) {C2 field-level damage\\and its cost};
+\draw[flow] (e1.east) -- (c1.west);
+\draw[flow] (e3.east) -- (c1.west);
+\draw[flow] (zs.east) -- (c1.west);
+\draw[flow] (zs.east) -- (c2.west);
+\draw[flow] (e5.east) -- (c2.west);
 \draw[flow] (e6.east) -- (c3.west);
-\foreach \x in {e7,e8,e9} \draw[flow] (\x.east) -- (c4.west);
-\node[alab, align=left, text width=86mm, anchor=north west] at (-26,-95)
-  {E12 (stratification by year) and E13 (a closed-form digit model) were withdrawn by their own
-   controls and support no claim; both are reported in the threats section rather than omitted.};
+\foreach \x in {e7,e8,e9,e10} \draw[flow] (\x.east) -- (c4.west);
+\node[alab, align=left, text width=96mm, anchor=north west] at (-28,-120)
+  {Claims are numbered as in \S1, in decreasing order of how firmly the data support them.
+   E12 (stratification by year) and E13 (a closed-form digit model) were withdrawn by their own
+   controls and feed no claim; both are reported in the threats section rather than omitted.};
 \end{tikzpicture}
 \end{document}

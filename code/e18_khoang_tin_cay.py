@@ -100,6 +100,15 @@ def main():
     kiem(mac.get("digitTong") == str(n_vt) and mac.get("digitSai") == str(n_sai),
          "K1 so vi tri va so sai khop macro e13 sinh ra",
          "%s/%s vs %d/%d" % (mac.get("digitTong"), mac.get("digitSai"), n_vt, n_sai))
+    # K1b: chuoi RUT -> PHAT RA -> CUNG DO DAI -> VI TRI phai giam dan va ti le phat ra phai
+    # nam cung co voi ti le o Bang 6 va Bang 8. Day la phep bat dung cai loi vong 2.
+    rut = int(mac.get("digitRut", "0") or 0)
+    phat = len(hang)
+    kiem(rut > phat > len(cung) and n_vt >= len(cung),
+         "K1b chuoi rut > phat ra > cap cung do dai",
+         "%d > %d > %d, vi tri %d" % (rut, phat, len(cung), n_vt))
+    tl = 100.0 * phat / rut if rut else 0
+    kiem(5.0 < tl < 60.0, "K1b ti le phat ra nam trong co hop ly", "%.1f%%" % tl)
 
     def boot_p(don_vi):
         out = []
@@ -120,7 +129,7 @@ def main():
 
     ra.update({"digitPN": "%d" % n_vt,
                "digitPLo": "%.3f" % lo_vt, "digitPHi": "%.3f" % hi_vt,
-               "digitMau": "%d" % len(hang), "digitCung": "%d" % len(cung),
+               "digitCung": "%d" % len(cung),
                "digitViTri": "%.1f" % (n_vt / float(len(cung))),
                "digitPCumLo": "%.3f" % lo_tl, "digitPCumHi": "%.3f" % hi_tl,
                "tranCao": "%.1f" % (100 * (1 - p_hat)),

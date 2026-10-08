@@ -197,6 +197,12 @@ def main():
 
     with io.open(os.path.join(RES, "so-lieu-e13.tex"), "w", encoding="utf-8") as f:
         f.write("%% SINH TU DONG. KHONG sua tay.\n")
+        # ⛔ Phai sinh CA HAI: co mau RUT va so ca PHAT RA. Thieu cai dau thi van xuoi lay
+        # nham cai sau lam cai truoc. Do la dung loi nguoi doc ngoai bat o vong doc thu hai:
+        # bai viet "mot lan rut 92 tai lieu, may tra ve so o 92 ca", tuc ti le phat ra 100%,
+        # mau thuan voi chinh Bang 6 (59/250) va Bang 8 (61/200) cua bai.
+        f.write("\\newcommand{\\digitRut}{%d}\n" % len(hang))
+        f.write("\\newcommand{\\digitPhatRa}{%.1f}\n" % (100.0 * len(cap) / len(hang)))
         f.write("\\newcommand{\\digitP}{%.3f}\n" % p)
         f.write("\\newcommand{\\digitN}{%d}\n" % len(cap))
         f.write("\\newcommand{\\digitSai}{%d}\n" % sai_cs)

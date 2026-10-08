@@ -88,7 +88,8 @@ def main():
                      ("cHaiDuHongCoCMap", th), ("cHaiDuTot", len(du_tot)),
                      ("cHaiDuTotCoCMap", tt)):
             f.write("\\newcommand{\\%s}{%d}\n" % (k, v))
-        f.write("\\newcommand{\\cHaiDuKetLuan}{%s}\n" % ("no" if du_nho else "yes"))
+        # cHaiDuKetLuan da bo: no la co TU KIEM cua script, khong phai so de in, va mot
+        # macro dinh nghia ma khong ai dung la mot cho de nguoi doc hoi.
     print("\n  da ghi results/so-lieu-e17.tex")
     print("=> %s (%d loi)" % ("DAT" if not loi else "CHUA DAT", len(loi)))
     for x in loi:

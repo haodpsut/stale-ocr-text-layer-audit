@@ -318,6 +318,33 @@ def main():
             nho.append("%s %.1fpt" % (ten, pt))
     kiem(not nho, "B19 chu trong hinh >= 6pt sau khi thu phong", ", ".join(nho))
 
+    # ---- B20: THU NGO. Vong doc ngoai thu hai so NHI PHAN thu ngo voi ban truoc va thay no
+    # Y NGUYEN, van chao editor bang mot con so ban thao DA RUT. Cong cu toi chi doc ban thao,
+    # khong doc tai lieu di kem, nen khong the thay. Nay no doc.
+    cl_t = os.path.join(P, "cover-letter.tex")
+    cl_p = os.path.join(P, "cover-letter.pdf")
+    if not os.path.exists(cl_t):
+        kiem(False, "B20 co thu ngo")
+    else:
+        clt = io.open(cl_t, encoding="utf-8").read()
+        kiem(os.path.exists(cl_p) and os.path.getmtime(cl_p) >= os.path.getmtime(cl_t),
+             "B20 thu ngo da dung lai sau lan sua cuoi")
+        # moi con so dang thap phan trong thu PHAI la macro, y nhu than bai
+        goc_so = re.findall(r"(?<![\\\w.])\d+\.\d+(?![\d])",
+                            re.sub(r"\\[a-zA-Z]+\{[^}]*\}", "", clt))
+        kiem(not goc_so, "B20 khong so thap phan go tay trong thu ngo", ", ".join(goc_so[:4]))
+        # macro thu dung phai TON TAI, va gia tri in ra phai khop ban thao
+        dung_cl = set(re.findall(r"\\([A-Za-z]+)\{\}", clt))
+        thieu = sorted(m for m in dung_cl if m in dn and m not in dn) or []
+        cl_txt = subprocess.run(["pdftotext", cl_p, "-"],
+                                capture_output=True, text=True).stdout if os.path.exists(cl_p) else ""
+        cam = [v for k, v in (("bnSoHoaVon", "0.224"),) if v in cl_txt]
+        kiem(not cam, "B20 thu ngo khong mang so ban thao da rut", ", ".join(cam))
+        # moi so xuat hien trong thu phai xuat hien trong than bai
+        so_cl = set(re.findall(r"(?<![\d.])\d+\.\d+(?![\d])", cl_txt))
+        la = sorted(x for x in so_cl if x not in txt)
+        kiem(not la, "B20 moi so trong thu ngo deu co trong ban thao", ", ".join(la[:4]))
+
     print("\n=> %s (%d loi)" % ("DAT, san sang gui doc ngoai" if not loi else "CHUA DAT", len(loi)))
     for x in loi:
         print("   loi: " + x)

@@ -118,4 +118,3 @@ dpiCaiThien     # co/khong cai thien o 400 dpi; script dung no de tu tu choi, ba
 # ---- bo 08/10 sau vong doc ngoai
 bnSoARa          # cau "all 1 of the links" doc nhu loi dan trang; da viet thanh chu
 bnSoHoaVon       # thay bang bnSoHoaVonHai (hai chu so co nghia) vi ba chu so la do chinh xac gia
-cHaiDuKetLuan    # co tu kiem cua e17: phan du co du de ket luan khong; bai noi bang van xuoi

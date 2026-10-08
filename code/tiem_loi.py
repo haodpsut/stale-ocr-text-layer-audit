@@ -64,7 +64,10 @@ CA = [
      "B13 moi hinh"),
     # ⛔ Ca nay tung KHONG bat duoc, va ly do la ca tiem CU chu khong phai cong hong:
     # tab:sohieu nay duoc nhac HAI lan, nen bo mot cho van con mot. Phai bo HET.
-    ("B13 bang mo coi", os.path.join(S, "04-results.tex"),
+    # ⛔ Ca nay da hong HAI lan vi cung mot ly do: no go tham chieu o MOT tep, ma so tham
+    # chieu toi tab:sohieu cu tang len theo cac vong sua. Nay no go o MOI tep muc, nen no
+    # khong the cu nua.
+    ("B13 bang mo coi", "__MOI_MUC__",
      lambda t: t.replace("(Table~\\ref{tab:sohieu})", "").replace(
          "Table~\\ref{tab:sohieu}", "that table"),
      "B13 moi bang"),
@@ -130,8 +133,18 @@ def main():
     a = ap.parse_args()
     cases = [c for c in CA if not a.ca or a.ca in c[0]]
 
+    # muc tieu dac biet: ap phep bien doi len MOI tep muc
+    no_rong = []
+    for ten, t, bien, cho in cases:
+        if t == "__MOI_MUC__":
+            no_rong.append((ten, sorted(os.path.relpath(x, GOC) for x in
+                                        glob.glob(os.path.join(GOC, S, "*.tex"))), bien, cho))
+        else:
+            no_rong.append((ten, [t], bien, cho))
+    cases = no_rong
+
     # --- sao luu TRUOC, va xac minh ban sao
-    tep = sorted(set(c[1] for c in cases))
+    tep = sorted({x for c in cases for x in c[1]})
     kho = tempfile.mkdtemp(prefix="tiem-loi-")
     goc_bam = {}
     for t in tep:
@@ -153,11 +166,11 @@ def main():
 
     ketqua = []
     try:
-        for ten, t, bien, cho in cases:
-            p = os.path.join(GOC, t)
-            cu = io.open(p, encoding="utf-8").read()
+        for ten, ts, bien, cho in cases:
+            cu = {t: io.open(os.path.join(GOC, t), encoding="utf-8").read() for t in ts}
             try:
-                io.open(p, "w", encoding="utf-8").write(bien(cu))
+                for t in ts:
+                    io.open(os.path.join(GOC, t), "w", encoding="utf-8").write(bien(cu[t]))
                 ma, ra = chay_cong()
                 hong = [l.strip()[5:] for l in ra.splitlines() if l.strip().startswith("loi:")]
                 bat = any(cho in h for h in hong)
@@ -169,7 +182,8 @@ def main():
                 if ma != 0 and not bat:
                     print("       (cong hong, nhung vi phep khac: %s)" % "; ".join(hong[:3]))
             finally:
-                io.open(p, "w", encoding="utf-8").write(cu)
+                for t in ts:
+                    io.open(os.path.join(GOC, t), "w", encoding="utf-8").write(cu[t])
     finally:
         for t in tep:
             src = os.path.join(GOC, t)
