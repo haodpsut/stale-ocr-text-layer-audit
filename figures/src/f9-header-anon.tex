@@ -1,0 +1,20 @@
+% Ban AN DANH cua hinh dau trang. Anh that in ro ma CO QUAN BAN HANH, va ma ay trung voi ten
+% truong cua tac gia thu nhat, nen o ban nop phan bien an danh hai chieu no phai duoc che.
+% Che bang HOP DAC, khong lam mo: anh lam mo van doc duoc khi phong to.
+\documentclass[border=3pt]{standalone}
+\usepackage{graphicx,tikz}
+\usetikzlibrary{calc}
+\usepackage[T1]{fontenc}
+\newcommand{\cheanh}[2]{%
+  \begin{tikzpicture}
+    \node[inner sep=0] (im) {\includegraphics[width=0.46\linewidth]{#1}};
+    \fill[black!80] ($(im.south east)!#2!(im.south west)$) rectangle (im.north east);
+    \node[font=\tiny\sffamily,text=white,anchor=east] at ([xshift=-3pt]im.east) {issuer};
+  \end{tikzpicture}}
+\begin{document}
+\begin{tabular}{@{}c@{\hspace{10pt}}c@{}}
+\cheanh{header-540.png}{0.42} & \cheanh{header-630.png}{0.38} \\[2pt]
+\footnotesize (a) filing record \texttt{540} &
+\footnotesize (b) filing record \texttt{630} \\
+\end{tabular}
+\end{document}

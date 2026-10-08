@@ -108,7 +108,9 @@ CA = [
          "serve as a research corpus, and that the measurements reported below were therefore "
          "taken on a collection whose composition nobody designed. We propose no fix;"),
      "B14 tom tat <= 250 tu"),
-    ("B14 Highlight qua 85 ky tu", "paper/main.tex",
+    # ⛔ Ca nay tung tro vao main.tex. Highlights da chuyen sang MANH DUNG CHUNG, nen ca tiem
+    # phai di theo; de nguyen thi no khong tim thay moc va bo tiem CHET GIUA CHUNG.
+    ("B14 Highlight qua 85 ky tu", "paper/frag-highlights.tex",
      doi("\\item A complete \\texttt{/ToUnicode} CMap halves the odds that a text layer is usable.",
          "\\item A complete \\texttt{/ToUnicode} CMap halves the odds that a given text layer "
          "turns out to be usable in practice."),
@@ -118,10 +120,31 @@ CA = [
      "B3 hinh khong dung deu da duoc khai"),
     ("B15 ten macro co chu so", os.path.join("results", "so-lieu-e17.tex"),
      lambda t: t + "\\newcommand{\\thuNghiem2}{1}\n", "B15 ten macro chi gom chu cai"),
+    # ⛔ Ca nay quan trong nhat trong bo: mot lan dung thu, ban an danh da nhung nham ANH CHUA
+    # CHE ma co quan, va khong phep kiem CHU nao thay duoc vi do la anh raster.
+    ("B21 ban an danh nhung hinh GOC", os.path.join("paper", "main.tex"),
+     doi("\\newcommand{\\HINHDAUTRANG}{f9-header-anon}",
+         "\\newcommand{\\HINHDAUTRANG}{f9-header}"),
+     "B21 ban an danh nhung HINH DA CHE"),
+    ("B21 ban an danh lo ten tac gia", os.path.join("paper", "main.tex"),
+     doi("\\ifnum\\ANON=0\n\\section*{CRediT authorship contribution statement}",
+         "\\section*{CRediT authorship contribution statement}"),
+     "B21 ban an danh khong lo danh tinh"),
 ]
 
 
-def chay_cong():
+def dung_an_danh():
+    """Dung lai ban AN DANH. Phai goi truoc khi cham cac phep B21, neu khong cong se cham
+    ban an danh CU va mot ca tiem vao nguon se khong the lam no do."""
+    for i in range(2):
+        subprocess.run(["pdflatex", "-interaction=nonstopmode", "-jobname=manuscript-anon",
+                        r"\def\ANON{1}\input{main.tex}"],
+                       cwd=os.path.join(GOC, "paper"), capture_output=True)
+
+
+def chay_cong(an_danh=False):
+    if an_danh:
+        dung_an_danh()
     r = subprocess.run([sys.executable, os.path.join(GOC, "code", "cong_bai.py")],
                        capture_output=True, text=True)
     return r.returncode, r.stdout
@@ -171,7 +194,7 @@ def main():
             try:
                 for t in ts:
                     io.open(os.path.join(GOC, t), "w", encoding="utf-8").write(bien(cu[t]))
-                ma, ra = chay_cong()
+                ma, ra = chay_cong(an_danh=cho.startswith("B21"))
                 hong = [l.strip()[5:] for l in ra.splitlines() if l.strip().startswith("loi:")]
                 bat = any(cho in h for h in hong)
                 ketqua.append((ten, cho, ma != 0, bat, hong))

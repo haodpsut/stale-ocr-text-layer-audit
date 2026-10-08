@@ -17,6 +17,7 @@ rm -rf $S $T && mkdir -p $S $T
 # ---------- 1. gom PHANG ----------
 cp $GOC/paper/main.tex $T/
 cp $GOC/paper/sections/*.tex $T/
+cp $GOC/paper/frag-*.tex $T/   # manh dung chung: khoi tac gia va highlights
 cp $GOC/paper/refs.bib $T/
 cp $GOC/results/so-lieu*.tex $T/
 cp $GOC/results/tables/*.tex $T/
@@ -29,6 +30,11 @@ src = "".join(io.open(f, encoding="utf-8").read()
               for f in glob.glob(os.path.join(goc, "paper", "sections", "*.tex"))
               + [os.path.join(goc, "paper", "main.tex")])
 dung = set(re.findall(r"includegraphics\[[^\]]*\]\{\.\./figures/([^}]+)\}", src))
+# ⛔ Hinh dau trang duoc chen qua MACRO (\HINHDAUTRANG) vi ban an danh dung ban da che.
+# Phai no macro ay ra CA HAI ten, de goi nguon dung lai duoc ca hai ban.
+if "\\HINHDAUTRANG.pdf" in dung:
+    dung.discard("\\HINHDAUTRANG.pdf")
+    dung |= {"f9-header.pdf", "f9-header-anon.pdf"}
 for ten in sorted(dung):
     shutil.copy2(os.path.join(goc, "figures", ten), os.path.join(t, ten))
 print("  chep %d hinh bai dung (bo qua %d hinh khong dung)"
@@ -55,8 +61,26 @@ echo "  ban phang: $TRANG trang   ·   ban goc: $GOCTRANG trang"
 # ---------- 4. don sach roi nen ----------
 rm -f main.aux main.log main.out main.blg
 cd $T && zip -qr $S/source.zip . -x '*.DS_Store'
-cp $T/main.pdf $S/manuscript.pdf
-cp $GOC/paper/cover-letter.pdf $S/cover-letter.pdf
+cp $T/main.pdf $S/manuscript-full.pdf
+
+# ---------- 4b. BON TEP he nop cua IPM doi rieng ----------
+# Phan bien AN DANH HAI CHIEU: ban thao nop KHONG duoc mang chi tiet tac gia, va hinh dau
+# trang phai dung ban DA CHE ma co quan (ma ay trung ten truong cua tac gia thu nhat).
+cd $GOC/paper
+for i in 1 2 3; do
+  pdflatex -interaction=nonstopmode -jobname=manuscript-anon \
+           "\\def\\ANON{1}\\input{main.tex}" >/dev/null 2>&1
+  [[ $i == 1 ]] && bibtex manuscript-anon >/dev/null 2>&1
+done
+for f in highlights title-page cover-letter; do
+  pdflatex -interaction=nonstopmode $f.tex >/dev/null 2>&1
+  pdflatex -interaction=nonstopmode $f.tex >/dev/null 2>&1
+done
+cp $GOC/paper/cover-letter.pdf      $S/1-cover-letter.pdf
+cp $GOC/paper/manuscript-anon.pdf   $S/2-manuscript-no-author-details.pdf
+cp $GOC/paper/highlights.pdf        $S/3-highlights.pdf
+cp $GOC/paper/title-page.pdf        $S/4-title-page-with-author-details.pdf
+cd $GOC
 
 # ---------- 5 va 6: thu phong sach + kiem goi, lam bang Python ----------
 # ⛔ Phan nay tung viet bang shell va CHET am tham. Mau `$( ... | grep -c X; true )` duoi

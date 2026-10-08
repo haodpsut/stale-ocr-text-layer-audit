@@ -57,11 +57,18 @@ def main():
         n = len(re.findall(mau, log))
         kiem(n == 0, "B2 " + ten, str(n))
 
+    # ⛔ Phai gom CA `frag-*.tex`: Highlights va khoi tac gia nay nam o manh DUNG CHUNG, va
+    # neu khong gom thi phep dem Highlights doc ra 0 roi bao XANH vi 0 khong vuot tran.
     src = "".join(io.open(f, encoding="utf-8").read()
-                  for f in glob.glob(os.path.join(P, "sections", "*.tex"))
+                  for f in sorted(glob.glob(os.path.join(P, "sections", "*.tex"))
+                                  + glob.glob(os.path.join(P, "frag-*.tex")))
                   + [os.path.join(P, "main.tex")])
     co = set(os.path.basename(x) for x in glob.glob(os.path.join(GOC, "figures", "*.pdf")))
     dung = set(re.findall(r"includegraphics\[[^\]]*\]\{\.\./figures/([^}]+)\}", src))
+    # hinh dau trang duoc chen qua macro vi ban an danh dung ban da che: no ra CA HAI ten
+    if "\\HINHDAUTRANG.pdf" in dung:
+        dung.discard("\\HINHDAUTRANG.pdf")
+        dung |= {"f9-header.pdf", "f9-header-anon.pdf"}
     kiem(dung <= co, "B3 moi hinh duoc chen deu ton tai", ", ".join(sorted(dung - co)))
     thua = co - dung
     kb_h = os.path.join(GOC, "code", "hinh-khong-dung.txt")
@@ -139,9 +146,13 @@ def main():
     i0, i1 = txt.find("Document pipelines decide"), txt.find("Keywords")
     n_tt = len(txt[i0:i1].split()) if 0 <= i0 < i1 else -1
     kiem(0 < n_tt <= 250, "B14 tom tat <= 250 tu (moc IPM)", str(n_tt))
+    # ⛔ Highlights nay nam o MANH DUNG CHUNG `frag-highlights.tex`, khong con inline trong
+    # main.tex. Doc tu khoi `highlights` thi ra DANH SACH RONG, va ca hai phep dua vao no
+    # (dem 3-5 muc, va "ban rieng khop ban thao") deu bao XANH mot cach RONG NGHIA.
+    frag_hl = os.path.join(P, "frag-highlights.tex")
     hls = re.findall(r"(?m)^\s*\\item (.+)$",
-                     re.search(r"(?s)\\begin\{highlights\}(.*?)\\end\{highlights\}", src).group(1)
-                     if re.search(r"(?s)\\begin\{highlights\}", src) else "")
+                     io.open(frag_hl, encoding="utf-8").read() if os.path.exists(frag_hl) else "")
+    kiem(bool(hls), "B14 doc duoc danh sach Highlights (khong rong)", "%d muc" % len(hls))
     kiem(3 <= len(hls) <= 5, "B14 co 3-5 Highlights (moc IPM)", str(len(hls)))
     # ⛔ Ban dau toi dem tren BAN IN bang cach bat tung dong bat dau bang dau bullet. SAI:
     # bullet dai BI NGAT DONG, nen phep do chi thay DONG DAU va mot bullet 82 ky tu lot qua.
@@ -150,7 +161,10 @@ def main():
         for _ in range(4):
             t = re.sub(r"\\([A-Za-z]+)\{\}|\\([A-Za-z]+)(?![A-Za-z])",
                        lambda m: mac_hl.get(m.group(1) or m.group(2), ""), t)
-        return re.sub(r"[{}]|\\%", "%", t).strip()
+        # ⛔ Ban dau dong nay doi CA dau ngoac nhon LAN `\\%` thanh `%`, nen
+        # `\\texttt{/ToUnicode}` ra `%/ToUnicode%`. Dau ngoac phai BO, chi `\\%` moi thanh `%`.
+        t = t.replace("\\%", "%")
+        return re.sub(r"[{}]", "", t).strip()
     mac_hl = {}
     for f in glob.glob(os.path.join(GOC, "results", "so-lieu*.tex")):
         for k, v in re.findall(r"\\newcommand\{\\(\w+)\}\{([^}]*)\}",
@@ -344,6 +358,53 @@ def main():
         so_cl = set(re.findall(r"(?<![\d.])\d+\.\d+(?![\d])", cl_txt))
         la = sorted(x for x in so_cl if x not in txt)
         kiem(not la, "B20 moi so trong thu ngo deu co trong ban thao", ", ".join(la[:4]))
+
+    # ---- B21: bo BON TEP ma he nop cua IPM doi, va phep AN DANH.
+    # ⛔ Phep "khong thay chuoi X trong lop chu" la phep RONG doi voi thu nam trong ANH: hinh
+    # dau trang in ro ma co quan, trung ten truong cua tac gia thu nhat, va mot lan dung thu
+    # ban an danh da nhung nham anh CHUA CHE ma khong phep kiem chu nao thay duoc. Nen o day
+    # kiem CA HAI: chuoi trong lop chu, VA ten tep hinh ma ban an danh thuc su nhung.
+    anon_pdf = os.path.join(P, "manuscript-anon.pdf")
+    anon_log = os.path.join(P, "manuscript-anon.log")
+    if not os.path.exists(anon_pdf):
+        kiem(False, "B21 co ban thao AN DANH (chay zsh build-submit.sh)")
+    else:
+        at = subprocess.run(["pdftotext", anon_pdf, "-"], capture_output=True, text=True).stdout
+        LO = ["haodpsut", "B2025-DN02-25", "Phuc Hao", "Nguyen Nang", "Minh Tuan",
+              "Danang Architecture", "Bonch-Bruevich", "dau.edu.vn", "udn.vn",
+              "University of Danang", "CRediT"]
+        thay = [k for k in LO if k in at]
+        kiem(not thay, "B21 ban an danh khong lo danh tinh trong lop chu", ", ".join(thay))
+        lg = io.open(anon_log, encoding="utf-8", errors="ignore").read() if os.path.exists(anon_log) else ""
+        goc_h = re.findall(r"f9-header\.pdf", lg)
+        kiem(not goc_h, "B21 ban an danh nhung HINH DA CHE, khong phai hinh goc",
+             "con nhung f9-header.pdf" if goc_h else "")
+        kiem("f9-header-anon.pdf" in lg, "B21 ban an danh co nhung hinh da che")
+        try:
+            from pypdf import PdfReader as _PR
+            md = _PR(anon_pdf).metadata or {}
+            xau_md = [k for k, v in md.items()
+                      if v and any(x.lower() in str(v).lower() for x in ("hao", "nguyen", "pham"))]
+            kiem(not xau_md, "B21 sieu du lieu PDF khong mang ten tac gia", ", ".join(map(str, xau_md)))
+        except Exception as e:
+            kiem(False, "B21 doc duoc sieu du lieu", str(e))
+
+    # highlights va title page phai TON TAI va KHOP ban thao
+    hl_pdf = os.path.join(P, "highlights.pdf")
+    tp_pdf = os.path.join(P, "title-page.pdf")
+    kiem(os.path.exists(hl_pdf) and os.path.exists(tp_pdf),
+         "B21 co tep Highlights va Title page rieng")
+    if os.path.exists(hl_pdf):
+        ht = subprocess.run(["pdftotext", hl_pdf, "-"], capture_output=True, text=True).stdout
+        thieu_hl = [h for h in hls if no_macro(h)[:28] not in " ".join(ht.split())]
+        kiem(not thieu_hl, "B21 Highlights rieng khop ban thao",
+             "; ".join(no_macro(h)[:30] for h in thieu_hl[:2]))
+    if os.path.exists(tp_pdf):
+        tt = subprocess.run(["pdftotext", tp_pdf, "-"], capture_output=True, text=True).stdout
+        can = ["Phuc Hao Do", "Nguyen Nang Hung Van", "Minh Tuan Pham",
+               "haodp@dau.edu.vn", "CRediT", "B2025-DN02-25"]
+        thieu_tp = [k for k in can if k not in tt]
+        kiem(not thieu_tp, "B21 Title page co du chi tiet tac gia", ", ".join(thieu_tp))
 
     print("\n=> %s (%d loi)" % ("DAT, san sang gui doc ngoai" if not loi else "CHUA DAT", len(loi)))
     for x in loi:
